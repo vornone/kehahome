@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    environment: FTP_HOST
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -31,5 +31,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: build
+          local-dir: ./build
           server-dir: ${{ secrets.FTP_TARGET }}
