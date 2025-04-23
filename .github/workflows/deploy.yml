@@ -22,7 +22,11 @@ jobs:
         run: npm install
 
       - name: Build React app
-        run: npm run build
+        run: |
+        ls -la
+        npm run build
+        echo "Build directory contents:"
+        ls -la ./build
 
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
