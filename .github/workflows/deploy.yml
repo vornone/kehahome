@@ -27,7 +27,7 @@ jobs:
           ls -la
           npm run build
           echo "Build directory contents:"
-          ls -la ./build/
+          ls -la ./dist/
 
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -36,5 +36,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./build/ 
+          local-dir: ./dist/ 
           server-dir: ${{ secrets.FTP_TARGET }}
