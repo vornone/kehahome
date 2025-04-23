@@ -27,7 +27,11 @@ jobs:
           npm run build
           echo "Build directory contents:"
           ls -la ./dist/
-
+      - name: Debug FTP Secrets
+        run: |
+          echo "FTP_HOST: ${{ secrets.FTP_HOST }}"
+          echo "FTP_USERNAME: ${{ secrets.FTP_USERNAME }}"
+          echo "FTP_PORT: ${{ secrets.FTP_PORT }}"
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
