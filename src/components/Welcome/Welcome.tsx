@@ -34,7 +34,7 @@ export function Welcome({ isMobile }: Props) {
                 component="span"
                 gradient={{ from: 'orange', to: 'yellow.1' }}
               >
-                Keha Home
+                TEsting
               </Text>
             </Title>
           )}
