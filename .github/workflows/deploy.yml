@@ -1,31 +1,43 @@
-name: Deploy to Hostinger via FTP
+name: 🚀 Deploy React to Hostinger
 
 on:
   push:
-    branches: [ main ] # or your preferred branch
+    branches:
+      - main
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '16' # or your React version
-    
-    - name: Install dependencies and build
-      run: |
-        npm install
-        npm run build
-        
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./build/
-        server-dir: /public_html/ # or your Hostinger directory
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: |
+          ls -la
+          npm run build
+          echo "Build directory contents:"
+          ls -la ./dist/
+      - name: Debug FTP Secrets
+        run: |
+          echo "FTP_HOST: ${{ secrets.FTP_HOST }}"
+          echo "FTP_USERNAME: ${{ secrets.FTP_USERNAME }}"
+          echo "FTP_PORT: ${{ secrets.FTP_PORT }}"
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          local-dir: ./dist/ 
+          server-dir: ${{ secrets.FTP_TARGET }}
